@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f8f5f0">
+<title>Für dich</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f5f0;
+  --bg-2: #efe9e1;
+  --rose: #b8646b;
+  --rose-deep: #96484f;
+  --wine: #2f2926;
+  --blush: #e6dcd0;
+  --paper: #fffdf9;
+  --gold: #b99556;
+  --ink: #2f2a28;
+  --muted: #7d736c;
+  --shadow: 0 10px 30px rgba(60, 40, 30, .10), 0 2px 6px rgba(60, 40, 30, .06);
+  --radius: 18px;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --hand: "Caveat", "Segoe Print", cursive;
+  --sans: "Nunito", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 15% 10%, #f3ebe2 0, transparent 40%),
+    radial-gradient(circle at 90% 40%, #f1ece6 0, transparent 35%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+button { font: inherit; cursor: pointer; }
+a { color: inherit; }
+
+/* schwebende Herzen */
+#hearts { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+#hearts span {
+  position: absolute; bottom: -40px; opacity: 0;
+  animation: float linear infinite; color: var(--rose);
+  filter: blur(.2px);
+}
+@keyframes float {
+  0% { transform: translateY(0) rotate(0); opacity: 0; }
+  10% { opacity: .35; }
+  90% { opacity: .25; }
+  100% { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { #hearts { display: none; } }
+
+main { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 24px 16px 80px; }
+
+/* Sperrbildschirm */
+.lock {
+  min-height: 92vh; display: grid; place-items: center; text-align: center;
+}
+.lock-card {
+  background: rgba(255, 253, 249, .85); backdrop-filter: blur(6px);
+  border-radius: 28px; padding: 40px 28px 32px; box-shadow: var(--shadow);
+  width: min(420px, 100%); border: 1px solid var(--blush);
+}
+.lock h1 { font-family: var(--hand); font-size: 46px; color: var(--rose-deep); margin: 8px 0 4px; line-height: 1; }
+.lock p { color: var(--muted); margin: 0 0 24px; }
+.lock .dino { width: 120px; display: block; }
+.lock .cow { width: 84px; display: block; margin-bottom: 4px; }
+.friends { display: flex; justify-content: center; align-items: flex-end; gap: 4px; }
+.field {
+  width: 100%; padding: 14px 18px; border-radius: 999px; border: 2px solid var(--blush);
+  background: #fff; font: inherit; font-size: 17px; color: var(--ink); outline: none; text-align: center;
+  transition: border-color .2s;
+}
+.field:focus { border-color: var(--rose); }
+.btn {
+  margin-top: 14px; width: 100%; padding: 14px 18px; border: 0; border-radius: 999px;
+  background: var(--wine); color: #fff; font-weight: 700; font-size: 17px;
+  box-shadow: 0 8px 20px rgba(47, 41, 38, .2); transition: transform .15s;
+}
+.btn:active { transform: scale(.98); }
+.btn[disabled] { opacity: .7; }
+.remember { display: flex; gap: 8px; justify-content: center; align-items: center; margin-top: 14px; color: var(--muted); font-size: 15px; }
+.remember input { accent-color: var(--rose); width: 18px; height: 18px; }
+.err { color: var(--rose-deep); min-height: 22px; margin-top: 10px; font-weight: 600; }
+.shake { animation: shake .4s; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+/* Kopf */
+.hero { text-align: center; padding: 30px 0 10px; }
+.hero .kicker { font-family: var(--hand); font-size: 28px; color: var(--rose); }
+.hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(56px, 12vw, 92px); margin: 0; color: var(--wine); line-height: 1.02; }
+.hero .nick { display: inline-block; min-width: 4ch; color: var(--rose-deep); font-style: italic; transition: opacity .4s; }
+.counter {
+  display: inline-flex; gap: 18px; margin: 26px auto 0; padding: 14px 26px; border-radius: 999px;
+  background: var(--paper); box-shadow: var(--shadow); align-items: baseline; flex-wrap: wrap; justify-content: center;
+}
+.counter b { font-family: var(--serif); font-size: 38px; color: var(--rose-deep); line-height: 1; }
+.counter span { color: var(--muted); }
+.anniv { margin-top: 18px; font-family: var(--hand); font-size: 32px; color: var(--rose-deep); }
+
+/* Brief */
+.letter-wrap { display: grid; place-items: center; margin: 46px 0 20px; }
+.envelope {
+  position: relative; width: min(520px, 100%); background: none; border: 0; padding: 0;
+}
+.envelope .front {
+  background: linear-gradient(160deg, #eadcc8, #dcc8ad); border-radius: 14px; aspect-ratio: 16/10;
+  box-shadow: var(--shadow); display: grid; place-items: center; position: relative; overflow: hidden;
+}
+.envelope .front::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom right, transparent 49.5%, rgba(255,255,255,.35) 50%, transparent 50.5%),
+              linear-gradient(to bottom left, transparent 49.5%, rgba(255,255,255,.35) 50%, transparent 50.5%);
+}
+.envelope .seal {
+  width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #b55a62, #7e3a40);
+  display: grid; place-items: center; color: #f6e6dc; font-family: var(--serif); font-size: 21px; font-weight: 600; box-shadow: 0 4px 10px rgba(80,30,30,.3); z-index: 1;
+}
+.envelope .hint { position: absolute; bottom: 14px; width: 100%; text-align: center; font-family: var(--hand); font-size: 24px; color: var(--wine); }
+.letter {
+  width: min(620px, 100%); background: var(--paper); border-radius: 6px; padding: 36px 30px 30px;
+  box-shadow: var(--shadow); font-family: var(--hand); font-size: 25px; line-height: 34px; color: #2f2a28;
+  background-image: repeating-linear-gradient(transparent 0 33px, #ece4da 33px 34px); background-position: 0 30px;
+  animation: unfold .7s ease;
+}
+.letter p { margin: 0 0 34px; }
+.letter p:last-child { margin: 0; }
+.letter .sig { text-align: right; color: var(--rose-deep); font-size: 30px; }
+@keyframes unfold { from { transform: scaleY(.6) translateY(-20px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Zeitstrahl */
+.section-title { text-align: center; font-family: var(--serif); font-size: 40px; color: var(--wine); margin: 60px 0 6px; }
+.section-sub { text-align: center; color: var(--muted); margin: 0 0 30px; }
+.timeline { position: relative; padding: 10px 0; }
+.timeline::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; transform: translateX(-50%);
+  background: repeating-linear-gradient(var(--blush) 0 10px, transparent 10px 18px);
+}
+.tl-item { display: flex; justify-content: flex-end; padding-right: calc(50% + 34px); position: relative; margin-bottom: 26px; }
+.tl-item:nth-child(even) { justify-content: flex-start; padding-right: 0; padding-left: calc(50% + 34px); }
+.tl-item::after {
+  content: ""; position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%);
+  width: 13px; height: 13px; border-radius: 50%; background: var(--bg); border: 3px solid var(--rose);
+}
+@media (max-width: 720px) {
+  .timeline::before { left: 18px; }
+  .tl-item, .tl-item:nth-child(even) { justify-content: flex-start; padding: 0 0 0 46px; }
+  .tl-item::after { left: 18px; }
+}
+
+/* Polaroid */
+.polaroid {
+  background: var(--paper); padding: 10px 10px 14px; border-radius: 4px; box-shadow: var(--shadow);
+  border: 0; text-align: left; color: inherit; display: block; width: 100%; max-width: 330px; text-decoration: none;
+  transform: rotate(var(--tilt, 0deg)); transition: transform .25s, box-shadow .25s;
+}
+.polaroid:hover, .polaroid:focus-visible { transform: rotate(0) translateY(-4px) scale(1.02); box-shadow: 0 16px 38px rgba(60,40,30,.18); outline: none; }
+.polaroid .ph { aspect-ratio: 1; background: linear-gradient(135deg, #efe7dd, #e4d9cc); overflow: hidden; border-radius: 2px; position: relative; }
+.polaroid .ph img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .5s; }
+.polaroid .ph img.on { opacity: 1; }
+.polaroid .cap { font-family: var(--hand); font-size: 28px; color: var(--wine); margin: 10px 4px 0; line-height: 1.05; }
+.polaroid .meta { font-size: 14px; color: var(--muted); margin: 4px 4px 0; }
+.tape::before {
+  content: ""; position: absolute; top: -12px; left: 50%; width: 90px; height: 24px; transform: translateX(-50%) rotate(-3deg);
+  background:
+    radial-gradient(ellipse 10px 7px at 18% 45%, #2f2926 92%, transparent 100%),
+    radial-gradient(ellipse 7px 9px at 52% 70%, #2f2926 92%, transparent 100%),
+    radial-gradient(ellipse 8px 5px at 82% 30%, #2f2926 92%, transparent 100%),
+    rgba(253, 251, 247, .95);
+  box-shadow: 0 1px 3px rgba(0,0,0,.1); z-index: 2; opacity: .92;
+}
+.tape { position: relative; }
+
+/* Unterseiten */
+.back {
+  display: inline-flex; align-items: center; gap: 6px; border: 0; background: var(--paper); box-shadow: var(--shadow);
+  padding: 10px 18px; border-radius: 999px; color: var(--rose-deep); font-weight: 700; text-decoration: none;
+}
+.page-head { text-align: center; margin: 26px 0 30px; }
+.page-head .kicker { font-family: var(--hand); font-size: 26px; color: var(--rose); }
+.page-head h1 { font-family: var(--serif); font-size: clamp(38px, 7vw, 60px); color: var(--wine); margin: 0; line-height: 1.05; }
+.page-head p { max-width: 640px; margin: 14px auto 0; font-size: 18px; line-height: 1.6; color: var(--ink); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 30px 26px; justify-items: center; }
+
+/* Galerie */
+.gallery { columns: 3 240px; column-gap: 14px; }
+.gallery button {
+  display: block; width: 100%; margin: 0 0 14px; padding: 0; border: 0; break-inside: avoid; background: var(--blush);
+  border-radius: 12px; overflow: hidden; box-shadow: 0 4px 14px rgba(60,40,30,.10); position: relative;
+}
+.gallery img { width: 100%; display: block; opacity: 0; transition: opacity .5s, transform .4s; }
+.gallery img.on { opacity: 1; }
+.gallery button:hover img { transform: scale(1.03); }
+.gallery .play {
+  position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-size: 44px;
+  text-shadow: 0 2px 10px rgba(0,0,0,.4); pointer-events: none;
+}
+
+/* Lightbox */
+.lb { position: fixed; inset: 0; background: rgba(22, 18, 16, .95); z-index: 50; display: grid; place-items: center; touch-action: pan-y; }
+.lb img, .lb video { max-width: 96vw; max-height: 86vh; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,.4); }
+.lb .x, .lb .nav {
+  position: absolute; background: rgba(255,255,255,.14); color: #fff; border: 0; width: 48px; height: 48px;
+  border-radius: 50%; font-size: 24px; display: grid; place-items: center;
+}
+.lb .x { top: max(14px, env(safe-area-inset-top)); right: 14px; }
+.lb .prev { left: 12px; top: 50%; transform: translateY(-50%); }
+.lb .next { right: 12px; top: 50%; transform: translateY(-50%); }
+.lb .count { position: absolute; bottom: max(16px, env(safe-area-inset-bottom)); color: #e8ddd2; font-size: 15px; }
+.lb .spin { color: #e8ddd2; font-family: var(--hand); font-size: 28px; }
+@media (max-width: 600px) { .lb .nav { display: none; } }
+
+/* Geheim */
+.secret-card {
+  margin: 70px auto 0; max-width: 460px; text-align: center; padding: 34px 26px; border-radius: 26px;
+  background: linear-gradient(150deg, #2f2926, #4b403b); color: #fff; box-shadow: 0 16px 40px rgba(40,30,25,.3);
+  border: 0; width: 100%; display: block;
+}
+.secret-card .icon { font-size: 44px; }
+.secret-card h2 { font-family: var(--serif); font-size: 34px; margin: 6px 0; }
+.secret-card p { margin: 0; color: #d9cbbd; }
+.secret-lock .lock-card { background: rgba(255,253,249,.92); }
+
+footer { text-align: center; margin-top: 70px; color: var(--muted); font-family: var(--hand); font-size: 24px; }
+.moo { border: 0; background: none; padding: 0; position: relative; display: inline-block; }
+.moo .cow { width: 92px; display: block; transition: transform .2s; }
+.moo:active .cow { transform: rotate(-6deg) scale(.96); }
+.moo .bubble {
+  position: absolute; left: 50%; bottom: 100%; margin-bottom: 6px; background: var(--paper); box-shadow: var(--shadow); border-radius: 14px;
+  padding: 4px 12px; font-family: var(--hand); font-size: 24px; color: var(--ink); white-space: nowrap; opacity: 0; transform: translate(-50%, 6px); transition: .25s;
+}
+.moo.on .bubble { opacity: 1; transform: translate(-50%, 0); }
+.loading { text-align: center; padding: 30vh 0; font-family: var(--hand); font-size: 32px; color: var(--rose); }
+</style>
+</head>
+<body>
+<div id="hearts" aria-hidden="true"></div>
+<main id="app"><div class="loading">…</div></main>
+
+<template id="dino">
+<svg class="dino" viewBox="0 0 160 130" aria-hidden="true">
+  <path d="M28 96c-16 2-24 12-22 20 10-6 18-6 26-9z" fill="#93b38a"/>
+  <path d="M30 88c0-30 22-48 52-48 12 0 20-14 34-14 18 0 30 12 30 26 0 12-8 20-22 20h-8c-2 26-22 42-50 42-20 0-36-10-36-26z" fill="#a9c4a0"/>
+  <path d="M60 44l6-14 8 12 8-14 6 14 8-12 4 14" fill="none" stroke="#6f9468" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="122" cy="46" r="5.5" fill="#4a2a35"/><circle cx="124" cy="44" r="1.8" fill="#fff"/>
+  <ellipse cx="110" cy="58" rx="7" ry="4" fill="#e8a39b" opacity=".55"/>
+  <path d="M132 60q6 4 12 0" stroke="#4a2a35" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M58 116v10M84 114v12" stroke="#93b38a" stroke-width="9" stroke-linecap="round"/>
+  <path d="M96 84l10 6" stroke="#93b38a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M112 92c-4-6 4-10 7-4 3-6 11-2 7 4l-7 7z" fill="#b8646b"/>
+</svg>
+</template>
+
+<template id="cow">
+<svg class="cow" viewBox="0 0 120 112" aria-hidden="true">
+  <path d="M38 24c-4-8-2-16 2-18 1 6 3 10 7 13zM82 24c4-8 2-16-2-18-1 6-3 10-7 13z" fill="#e6d3a3" stroke="#2f2926" stroke-width="2.5" stroke-linejoin="round"/>
+  <ellipse cx="20" cy="42" rx="16" ry="9" transform="rotate(-20 20 42)" fill="#fff" stroke="#2f2926" stroke-width="3"/>
+  <ellipse cx="21" cy="42" rx="9" ry="4.5" transform="rotate(-20 21 42)" fill="#f2b8b0"/>
+  <ellipse cx="100" cy="42" rx="16" ry="9" transform="rotate(20 100 42)" fill="#fff" stroke="#2f2926" stroke-width="3"/>
+  <ellipse cx="99" cy="42" rx="9" ry="4.5" transform="rotate(20 99 42)" fill="#f2b8b0"/>
+  <path d="M60 18c22 0 34 14 34 34 0 24-14 42-34 42S26 76 26 52c0-20 12-34 34-34z" fill="#fff" stroke="#2f2926" stroke-width="3"/>
+  <path d="M34 34c6-10 18-12 22-6 3 5-2 12-9 13-6 1-10 4-14 2-2-2-1-6 1-9zM78 58c6-2 12 0 13 5 0 5-5 6-9 5-5-1-8-8-4-10z" fill="#2f2926"/>
+  <circle cx="47" cy="52" r="4.8" fill="#2f2926"/><circle cx="48.5" cy="50.5" r="1.6" fill="#fff"/>
+  <circle cx="73" cy="52" r="4.8" fill="#2f2926"/><circle cx="74.5" cy="50.5" r="1.6" fill="#fff"/>
+  <ellipse cx="38" cy="62" rx="5" ry="3" fill="#f2b8b0" opacity=".7"/><ellipse cx="82" cy="62" rx="5" ry="3" fill="#f2b8b0" opacity=".7"/>
+  <ellipse cx="60" cy="76" rx="25" ry="15" fill="#f2b8b0" stroke="#2f2926" stroke-width="3"/>
+  <ellipse cx="51" cy="75" rx="3" ry="4" fill="#2f2926"/><ellipse cx="69" cy="75" rx="3" ry="4" fill="#2f2926"/>
+  <path d="M54 84q6 4 12 0" stroke="#2f2926" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>
+</template>
+
+<script>
+"use strict";
+const $ = (s, el = document) => el.querySelector(s);
+const app = $("#app");
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+  del(k) { try { localStorage.removeItem(k); } catch {} },
+};
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const b64 = { enc: b => btoa(String.fromCharCode(...new Uint8Array(b))), dec: s => Uint8Array.from(atob(s), c => c.charCodeAt(0)) };
+
+let params, mainKey, secretKey, data, secretData;
+const urlCache = new Map();
+
+// ---------- Krypto ----------
+async function deriveKey(pw, salt) {
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw.toLowerCase().trim().split(/\s+/).join(" ")), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64.dec(salt), iterations: params.iter, hash: "SHA-256" },
+    base, { name: "AES-GCM", length: 256 }, true, ["decrypt"]);
+}
+const importRaw = raw => crypto.subtle.importKey("raw", b64.dec(raw), "AES-GCM", true, ["decrypt"]);
+const exportRaw = async key => b64.enc(await crypto.subtle.exportKey("raw", key));
+async function fetchDec(key, name) {
+  const buf = await (await fetch("d/" + name)).arrayBuffer();
+  return crypto.subtle.decrypt({ name: "AES-GCM", iv: buf.slice(0, 12) }, key, buf.slice(12));
+}
+async function openJson(key, name) { return JSON.parse(new TextDecoder().decode(await fetchDec(key, name))); }
+async function blobUrl(key, name, type) {
+  if (!urlCache.has(name)) urlCache.set(name, fetchDec(key, name).then(b => URL.createObjectURL(new Blob([b], { type }))));
+  return urlCache.get(name);
+}
+
+// ---------- Herzen ----------
+(function hearts() {
+  const h = $("#hearts");
+  for (let i = 0; i < 0; i++) {
+    const s = document.createElement("span");
+    s.textContent = ["♥", "♡", "❤"][i % 3];
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.fontSize = 12 + Math.random() * 22 + "px";
+    s.style.animationDuration = 14 + Math.random() * 16 + "s";
+    s.style.animationDelay = -Math.random() * 30 + "s";
+    h.appendChild(s);
+  }
+})();
+
+// ---------- Sperrbildschirm ----------
+function lockScreen({ title, text, onKey, saltKey, rememberKey, secret }) {
+  app.innerHTML = `
+    <div class="lock ${secret ? "secret-lock" : ""}"><form class="lock-card" autocomplete="off">
+      ${secret ? `<div class="friends"><div style="font-size:54px">🔐</div>${$("#cow").innerHTML}</div>` : `<div class="friends">${$("#dino").innerHTML}${$("#cow").innerHTML}</div>`}
+      <h1>${title}</h1><p>${text}</p>
+      <input class="field" type="password" placeholder="Passwort" aria-label="Passwort" autocomplete="current-password" required>
+      <label class="remember"><input type="checkbox" checked> Auf diesem Gerät merken</label>
+      <button class="btn">Öffnen</button>
+      <div class="err" role="alert"></div>
+      ${secret ? `<button type="button" class="back" style="margin-top:6px" onclick="location.hash='#/'">← Zurück</button>` : ""}
+    </form></div>`;
+  const form = $("form", app), input = $("input", form), btn = $(".btn", form), err = $(".err", form);
+  input.focus();
+  form.onsubmit = async e => {
+    e.preventDefault();
+    btn.disabled = true; btn.textContent = "Einen Moment …"; err.textContent = "";
+    try {
+      const key = await deriveKey(input.value, params[saltKey]);
+      await onKey(key);
+      if ($("input[type=checkbox]", form).checked) store.set(rememberKey, await exportRaw(key));
+      route();
+    } catch {
+      err.textContent = "Hmm, das war nicht ganz richtig";
+      form.classList.remove("shake"); void form.offsetWidth; form.classList.add("shake");
+      btn.disabled = false; btn.textContent = "Öffnen"; input.select();
+    }
+  };
+}
+
+// ---------- Hilfen ----------
+const DAY = 864e5;
+function fmtDate(iso) {
+  if (!iso) return "";
+  const d = new Date(iso + "T12:00:00");
+  return d.toLocaleDateString("de-AT", { day: "numeric", month: "long", year: "numeric" });
+}
+const tilt = i => `--tilt:${[-2.5, 1.8, -1.2, 2.6, -2, 1.2][i % 6]}deg`;
+function lazyThumbs(root, key) {
+  const io = new IntersectionObserver(entries => entries.forEach(async en => {
+    if (!en.isIntersecting) return;
+    io.unobserve(en.target);
+    en.target.src = await blobUrl(key, en.target.dataset.t, "image/jpeg");
+    en.target.onload = () => en.target.classList.add("on");
+  }), { rootMargin: "400px" });
+  root.querySelectorAll("img[data-t]").forEach(img => io.observe(img));
+}
+const firstImg = ev => (ev.items.find(it => it.type === "img") || ev.items[0])?.t;
+// Titelbild eines Monats: erstes Foto aus dem Event mit den meisten Bildern
+const coverOf = m => firstImg(m.events.reduce((a, b) => (b.items.length > a.items.length ? b : a)));
+const countLabel = ev => {
+  const v = ev.items.filter(it => it.type === "video").length, f = ev.items.length - v;
+  return [f && f + (f === 1 ? " Foto" : " Fotos"), v && v + (v === 1 ? " Video" : " Videos")].filter(Boolean).join(", ");
+};
+const countItems = ev => ev.items.length;
+
+// ---------- Startseite ----------
+function home() {
+  const start = new Date(data.together + "T00:00:00");
+  const now = new Date();
+  const days = Math.floor((now - start) / DAY);
+  const ann = new Date(start); ann.setFullYear(start.getFullYear() + 1);
+  const isAnnivDay = now.getMonth() === start.getMonth() && now.getDate() === start.getDate() && days > 0;
+  const years = Math.floor(days / 365.25);
+  const months = data.months;
+  const total = months.reduce((n, m) => n + m.events.reduce((k, e) => k + countItems(e), 0), 0);
+
+  app.innerHTML = `
+    <section class="hero">
+      <div class="kicker">für meine</div>
+      <h1><span class="nick" id="nick">${esc(data.nicknames[0])}</span></h1>
+      <div class="counter">
+        <span>seit</span><b>${days > 0 ? days.toLocaleString("de-AT") : 0}</b><span>Tagen offiziell zusammen</span>
+      </div>
+      ${isAnnivDay ? `<div class="anniv">Alles Liebe zu unserem ${years > 1 ? years + ". " : ""}Jahrestag! 🥂</div>` : ""}
+    </section>
+
+    <div class="letter-wrap" id="lw">
+      <button class="envelope" id="env" aria-label="Brief öffnen">
+        <div class="front"><div class="seal">N&amp;J</div><div class="hint">ein Brief für dich, tipp drauf</div></div>
+      </button>
+    </div>
+
+    <h2 class="section-title">${esc(data.title || "Unsere Geschichte")}</h2>
+    <p class="section-sub">${months.length} Monate · ${total} Erinnerungen</p>
+    <div class="timeline">
+      ${months.map((m, i) => `
+        <div class="tl-item">
+          <a class="polaroid tape" style="${tilt(i)}" href="#/m/${m.id}">
+            <div class="ph">${coverOf(m) ? `<img data-t="${coverOf(m)}" alt="">` : ""}</div>
+            <div class="cap">${esc(m.title)}</div>
+            <div class="meta">${m.events.length === 1 ? esc(m.events[0].title) : m.events.length + " Erlebnisse"}</div>
+          </a>
+        </div>`).join("")}
+    </div>
+
+    ${data.hasSecret ? `
+      <a class="secret-card" href="#/geheim" style="text-decoration:none">
+        <div class="icon">🔒</div><h2>Geheimer Ordner</h2><p>nur für uns zwei</p>
+      </a>` : ""}
+    <footer><button class="moo" id="moo" aria-label="Kuh">${$("#cow").innerHTML}<span class="bubble">Muuh!</span></button><div>von ${esc(data.from || "")}</div></footer>`;
+
+  lazyThumbs(app, mainKey);
+  const moo = $("#moo"), muhs = ["Muuh!", "Muuuh 🐮", "Hab dich lieb, Muh!", "Muh muh!"];
+  moo.onclick = () => { $(".bubble", moo).textContent = muhs[Math.floor(Math.random() * muhs.length)]; moo.classList.add("on"); clearTimeout(moo._t); moo._t = setTimeout(() => moo.classList.remove("on"), 1600); };
+  $("#env").onclick = () => {
+    $("#lw").innerHTML = `<div class="letter">${data.letter.map((p, i) =>
+      `<p>${esc(p)}</p>`).join("")}<p class="sig">${esc(data.from || "")}</p></div>`;
+  };
+  // Spitznamen wechseln
+  const nick = $("#nick"); let n = 0;
+  clearInterval(window._nickT);
+  window._nickT = setInterval(() => {
+    if (!document.body.contains(nick)) return clearInterval(window._nickT);
+    nick.style.opacity = 0;
+    setTimeout(() => { n = (n + 1) % data.nicknames.length; nick.textContent = data.nicknames[n]; nick.style.opacity = 1; }, 400);
+  }, 2600);
+}
+
+// ---------- Monat ----------
+function monthPage(id) {
+  const m = data.months.find(x => x.id === id);
+  if (!m) return (location.hash = "#/");
+  if (m.events.length === 1) return eventPage(m.events[0], m.title, "#/", mainKey, "#/");
+  app.innerHTML = `
+    <a class="back" href="#/">← Übersicht</a>
+    <header class="page-head"><div class="kicker">unser</div><h1>${esc(m.title)}</h1>${m.text ? `<p>${esc(m.text)}</p>` : ""}</header>
+    <div class="grid">
+      ${m.events.map((e, i) => `
+        <a class="polaroid tape" style="${tilt(i + 1)}" href="#/m/${m.id}/${i}">
+          <div class="ph">${e.items[0] ? `<img data-t="${firstImg(e)}" alt="">` : ""}</div>
+          <div class="cap">${esc(e.title)}</div>
+          <div class="meta">${[e.place && "📍 " + esc(e.place), fmtDate(e.date), countLabel(e)].filter(Boolean).join(" · ")}</div>
+        </a>`).join("")}
+    </div>`;
+  lazyThumbs(app, mainKey);
+}
+
+// ---------- Event / Galerie ----------
+function eventPage(ev, kicker, backHref, key, backLabelHref) {
+  app.innerHTML = `
+    <a class="back" href="${backHref}">← Zurück</a>
+    <header class="page-head"><div class="kicker">${esc(kicker)}</div><h1>${esc(ev.title)}</h1>
+      ${ev.date || ev.place ? `<div style="color:var(--muted);margin-top:6px">${[ev.place && "📍 " + esc(ev.place), fmtDate(ev.date)].filter(Boolean).join(" · ")}</div>` : ""}
+      ${ev.text ? `<p>${esc(ev.text)}</p>` : ""}</header>
+    <div class="gallery">
+      ${ev.items.map((it, i) => `
+        <button data-i="${i}" style="aspect-ratio:${it.w}/${it.h}" aria-label="Bild ${i + 1} öffnen">
+          <img data-t="${it.t}" alt="">${it.type === "video" ? `<span class="play">▶</span>` : ""}
+        </button>`).join("")}
+    </div>`;
+  lazyThumbs(app, key);
+  app.querySelectorAll(".gallery button").forEach(b => b.onclick = () => lightbox(ev.items, +b.dataset.i, key));
+}
+
+function lightbox(items, i, key) {
+  const lb = document.createElement("div");
+  lb.className = "lb";
+  lb.innerHTML = `<div class="stage"></div>
+    <button class="x" aria-label="Schließen">✕</button>
+    <button class="nav prev" aria-label="Vorheriges">‹</button>
+    <button class="nav next" aria-label="Nächstes">›</button>
+    <div class="count"></div>`;
+  document.body.appendChild(lb);
+  document.body.style.overflow = "hidden";
+  const stage = $(".stage", lb);
+  let cur = i, token = 0;
+  async function show(n) {
+    cur = (n + items.length) % items.length;
+    const it = items[cur], t = ++token;
+    $(".count", lb).textContent = `${cur + 1} / ${items.length}`;
+    stage.innerHTML = `<div class="spin">…</div>`;
+    const url = await blobUrl(key, it.f, it.type === "video" ? "video/mp4" : "image/jpeg");
+    if (t !== token) return;
+    stage.innerHTML = it.type === "video"
+      ? `<video src="${url}" controls autoplay playsinline></video>`
+      : `<img src="${url}" alt="">`;
+    // nächstes Bild schon vorladen
+    const nx = items[(cur + 1) % items.length];
+    if (nx.type === "img") blobUrl(key, nx.f, "image/jpeg");
+  }
+  const close = () => { lb.remove(); document.body.style.overflow = ""; document.removeEventListener("keydown", onKey); };
+  const onKey = e => { if (e.key === "Escape") close(); if (e.key === "ArrowRight") show(cur + 1); if (e.key === "ArrowLeft") show(cur - 1); };
+  document.addEventListener("keydown", onKey);
+  $(".x", lb).onclick = close;
+  $(".prev", lb).onclick = () => show(cur - 1);
+  $(".next", lb).onclick = () => show(cur + 1);
+  lb.onclick = e => { if (e.target === lb || e.target === stage) close(); };
+  let sx = null;
+  lb.addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", e => {
+    if (sx == null) return;
+    const dx = e.changedTouches[0].clientX - sx; sx = null;
+    if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
+  });
+  show(i);
+}
+
+// ---------- Geheim ----------
+async function secretPage(idx) {
+  if (!secretKey) {
+    const raw = store.get("vz-secret");
+    if (raw) { try { secretKey = await importRaw(raw); secretData = await openJson(secretKey, "secret.bin"); } catch { secretKey = null; store.del("vz-secret"); } }
+  }
+  if (!secretKey) return lockScreen({
+    title: "Geheimer Ordner", text: "Nur für uns zwei. Wie lautet das geheime Passwort?",
+    saltKey: "secretSalt", rememberKey: "vz-secret", secret: true,
+    onKey: async k => { secretData = await openJson(k, "secret.bin"); secretKey = k; },
+  });
+  const evs = secretData.events;
+  if (idx != null && evs[idx]) return eventPage(evs[idx], "geheim 🔒", evs.length > 1 ? "#/geheim" : "#/", secretKey);
+  if (evs.length === 1) return eventPage(evs[0], "geheim 🔒", "#/", secretKey);
+  app.innerHTML = `
+    <a class="back" href="#/">← Übersicht</a>
+    <header class="page-head"><div class="kicker">nur für uns</div><h1>Geheimer Ordner 🔒</h1></header>
+    <div class="grid">${evs.map((e, i) => `
+      <a class="polaroid tape" style="${tilt(i)}" href="#/geheim/${i}">
+        <div class="ph">${e.items[0] ? `<img data-t="${firstImg(e)}" alt="">` : ""}</div>
+        <div class="cap">${esc(e.title)}</div>
+        <div class="meta">${countLabel(e)}</div>
+      </a>`).join("")}</div>`;
+  lazyThumbs(app, secretKey);
+}
+
+// ---------- Routing ----------
+async function route() {
+  window.scrollTo(0, 0);
+  if (!mainKey) {
+    const raw = store.get("vz-key");
+    if (raw) { try { mainKey = await importRaw(raw); data = await openJson(mainKey, "main.bin"); } catch { mainKey = null; store.del("vz-key"); } }
+  }
+  if (!mainKey) return lockScreen({
+    title: "Hallo, Cuteste", text: "Hier wartet etwas auf dich. Wie lautet das Passwort?",
+    saltKey: "salt", rememberKey: "vz-key",
+    onKey: async k => { data = await openJson(k, "main.bin"); mainKey = k; },
+  });
+  const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+  if (parts[0] === "m" && parts[1]) {
+    const m = data.months.find(x => x.id === parts[1]);
+    if (m && parts[2] != null && m.events[+parts[2]]) return eventPage(m.events[+parts[2]], m.title, `#/m/${m.id}`, mainKey);
+    return monthPage(parts[1]);
+  }
+  if (parts[0] === "geheim") return secretPage(parts[1] != null ? +parts[1] : null);
+  home();
+}
+
+window.addEventListener("hashchange", route);
+fetch("d/params.json").then(r => r.json()).then(p => { params = p; route(); })
+  .catch(() => { app.innerHTML = `<div class="loading">Die Seite konnte nicht geladen werden 💭</div>`; });
+</script>
+</body>
+</html>
